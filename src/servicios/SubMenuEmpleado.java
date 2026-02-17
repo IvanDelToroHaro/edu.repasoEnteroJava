@@ -19,6 +19,8 @@ public class SubMenuEmpleado implements MenuInterfaz {
 		return Inicio.sc.nextByte();
 	}
 
+	boolean salirAMenu = false;
+
 	public void accionarSubMenuEmpleado() {
 
 		boolean esCerradoSubMenu = false;
@@ -34,6 +36,15 @@ public class SubMenuEmpleado implements MenuInterfaz {
 			case 1:
 				validarCliente();
 				break;
+			case 2:
+				borrarCliente();
+				if (salirAMenu == true) {
+					esCerradoSubMenu = true;
+				}
+				break;
+			case 3:
+				mostrarClientes();
+				break;
 			default:
 				System.out.println("No existe la opción elegida.");
 			}
@@ -42,17 +53,65 @@ public class SubMenuEmpleado implements MenuInterfaz {
 	}
 
 	public void validarCliente() {
-		for (Cliente u : Inicio.listaClientes) {
-			System.out.println(u.toString());
+		for (Cliente u : Inicio.hashMapClientes.values()) {
+			if (u.isEsValidadoCliente() == false) {
+				System.out.println(u.toString());
+			}
 		}
-		
+		boolean control = false;
 		System.out.println("Introduza el DNI para validar: ");
 		String dniParaValidar = Inicio.sc.next();
-		
-		if (dniParaValidar.equals(u.)) {
-			
+		for (Cliente u : Inicio.hashMapClientes.values()) {
+			if (dniParaValidar.equals(u.getDniCliente())) {
+				u.setEsValidadoCliente(true);
+				control = true;
+			}
+		}
+		if (control == false) {
+			System.out.println("DNI mal introducido");
+		}
+	}
+
+	Cliente eliminarCliente;
+
+	public void borrarCliente() {
+		salirAMenu=false;
+		boolean dniValido = false;
+		System.out.println("Introduzca el DNI a comprobar");
+		String dniIntro = Inicio.sc.next();
+		SubMenuCliente.validarDNI(dniIntro);
+
+		for (Cliente u : Inicio.hashMapClientes.values()) {
+			if (dniIntro.equals(u.getDniCliente())) {
+				System.out.println("DNI encontrado");
+				dniValido = true;
+				System.out.println("Volviendo al Menu");
+				salirAMenu = true;
+				eliminarCliente = u;
+			}
+		}
+		if (dniValido == false) {
+			System.out.println("El DNI no existe en la lista");
+			salirAMenu = true;
+		} else {
+			System.out.println("¿Esta seguro de que quiere eliminar este cliente? ('Si' o 'No')");
+			String confirmacion = Inicio.sc.next();
+			if (confirmacion.equalsIgnoreCase("Si")) {
+				Inicio.hashMapClientes.remove(eliminarCliente);
+				System.out.println("Cliente eliminado correctamente");
+			} else {
+				System.out.println("Volviendo al Menu");
+				salirAMenu = true;
+			}
 		}
 
 	}
 
+	public void mostrarClientes() {
+		for (Cliente u : Inicio.hashMapClientes.values()) {
+			if (u.isEsValidadoCliente() == true) {
+				System.out.println(u.toString());
+			}
+		}
+	}
 }

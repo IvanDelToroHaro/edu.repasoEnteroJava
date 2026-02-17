@@ -4,8 +4,8 @@ import controladores.Inicio;
 
 public class Menu implements MenuInterfaz {
 
-	private SubMenuEmpleado subMenuEmpleado = new SubMenuEmpleado();
-	private SubMenuCliente subMenuCliente = new SubMenuCliente();
+	public SubMenuEmpleado subMenuEmpleado = new SubMenuEmpleado();
+	public SubMenuCliente subMenuCliente = new SubMenuCliente();
 
 	@Override
 	public byte mostrarMenuYElegirOpcion() {

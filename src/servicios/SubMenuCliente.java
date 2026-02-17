@@ -18,6 +18,8 @@ public class SubMenuCliente implements MenuInterfaz {
 		return Inicio.sc.nextByte();
 	}
 
+	boolean salirAMenu = false;
+
 	public void accionarSubMenuCliente() {
 
 		boolean esCerradoSubMenu = false;
@@ -33,6 +35,12 @@ public class SubMenuCliente implements MenuInterfaz {
 			case 1:
 				nuevoCliente();
 				break;
+			case 2:
+				accederCliente();
+				if (salirAMenu == true) {
+					esCerradoSubMenu = true;
+				}
+				break;
 			default:
 				System.out.println("No existe la opción elegida.");
 			}
@@ -43,11 +51,9 @@ public class SubMenuCliente implements MenuInterfaz {
 
 	public void nuevoCliente() {
 
-		Cliente nuevoCliente = new Cliente(0, null, null, null, null, null, null, null, false);
-		
 		String dni;
 		boolean dniValido = false;
-		
+
 		do {
 			Inicio.sc.nextLine(); // Consumir el salto de línea pendiente
 			System.out.println("Introduzca su DNI (12345678A)");
@@ -60,24 +66,31 @@ public class SubMenuCliente implements MenuInterfaz {
 				System.out.println("DNI incorrecto");
 			}
 		} while (!dniValido); // Bucle hasta que el DNI sea válido
-		nuevoCliente.setDniCliente(dni);
-		
+		String dniCliente = dni;
+
 		System.out.println("Introduzca su nombre completo (Nombre Apellido1 Apellido2)");
 		String nombreEntero = Inicio.sc.nextLine();
 		String[] nombreDividido = nombreEntero.split(" ");
-		System.out.println(nombreEntero);
-		nuevoCliente.setNombreCliente(nombreDividido[0]);
-		nuevoCliente.setApellido1Cliente(nombreDividido[1]);
-		nuevoCliente.setApellido2Cliente(nombreDividido[2]);
+		String nombreCliente = nombreDividido[0];
+		String apellido1Cliente = nombreDividido[1];
+		String apellido2Cliente = nombreDividido[2];
 
-		/*System.out.println("");
-		Inicio.sc.next();*/
+		System.out.println("Introduzca su email");
+		String emailCliente = Inicio.sc.nextLine();
+
+		System.out.println("Introduzca su contraseña");
+		String contraseñaCliente = Inicio.sc.nextLine();
+
+		Cliente nuevoCliente = new Cliente(dniCliente, null, nombreCliente, apellido1Cliente, apellido2Cliente,
+				emailCliente, contraseñaCliente, false);
 
 		// Añadir cliente nuevo
-		Inicio.listaClientes.add(nuevoCliente);
+		Inicio.hashMapClientes.put(nuevoCliente.getIdCliente(), nuevoCliente);
+		System.out.println(nuevoCliente.toString1());
 
 	}
 
+	// Parte de nuevoCliente
 	public static boolean validarDNI(String dni) {
 		if (dni.length() != 9) {
 			return false;
@@ -92,4 +105,37 @@ public class SubMenuCliente implements MenuInterfaz {
 		return letra == letraCorrecta;
 	}
 
+	public void accederCliente() {
+		int i = 0;
+		salirAMenu = false;
+		boolean sesionValida = false;
+		do {
+			System.out.println("Introduzca su email");
+			String validarEmail = Inicio.sc.next();
+
+			System.out.println("Introduzca su contraseña");
+			String validarContrasenia = Inicio.sc.next();
+
+			for (Cliente u : Inicio.hashMapClientes.values()) {
+				if (validarEmail.equals(u.getEmailCliente()) && validarContrasenia.equals(u.getContraseniaCliente())
+						&& u.isEsValidadoCliente() == true) {
+					System.out.println("INICIO DE SESIÓN CORRECTO");
+					System.out.println("Volviendo al Menu");
+					salirAMenu = true;
+					sesionValida = true;
+				}
+			}
+
+			if (sesionValida == false) {
+				System.out.println("Error en los campos introducidos");
+				System.out.println("Volviendo al Menu");
+				salirAMenu = true;
+			}
+			i++;
+			if (i == 3 && sesionValida == false) {
+				System.out.println("Se acabaron los intentos");
+			}
+		} while (i < 3 && !salirAMenu);
+
+	}
 }

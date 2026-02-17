@@ -1,5 +1,8 @@
 package entidades;
 
+import controladores.Inicio;
+import java.util.Collections;
+
 public class Cliente {
 
 	//Atributos
@@ -10,32 +13,25 @@ public class Cliente {
 	String apellido1Cliente;
 	String apellido2Cliente;
 	String emailCliente;
-	String contraseñaCliente;
+	String contraseniaCliente;
 	boolean esValidadoCliente;
-	
-	
-	//Constructor Auto
-	/*public Cliente() {
-		super();
-	}*/
 
 	//Constructor Lleno
-	public Cliente(long idCliente, String dniCliente, String nombreCompletoCliente, String nombreCliente,
-			String apellido1Cliente, String apellido2Cliente, String emailCliente, String contraseñaCliente,
+	public Cliente(String dniCliente, String nombreCompletoCliente, String nombreCliente,
+			String apellido1Cliente, String apellido2Cliente, String emailCliente, String contraseniaCliente,
 			boolean esValidadoCliente) {
 		super();
-		this.idCliente = idCliente;
+		this.idCliente = Inicio.hashMapClientes.keySet().
+		Inicio.hashMapClientes = this.idCliente + 1;
 		this.dniCliente = dniCliente;
 		this.nombreCompletoCliente = apellido1Cliente+" "+apellido2Cliente+","+nombreCliente;
 		this.nombreCliente = nombreCliente;
 		this.apellido1Cliente = apellido1Cliente;
 		this.apellido2Cliente = apellido2Cliente;
 		this.emailCliente = emailCliente;
-		this.contraseñaCliente = contraseñaCliente;
+		this.contraseniaCliente = contraseniaCliente;
 		this.esValidadoCliente = esValidadoCliente;
 	}
-
-
 
 	//Getters & Setters
 	public long getIdCliente() {
@@ -80,11 +76,11 @@ public class Cliente {
 	public void setEmailCliente(String emailCliente) {
 		this.emailCliente = emailCliente;
 	}
-	public String getContraseñaCliente() {
-		return contraseñaCliente;
+	public String getContraseniaCliente() {
+		return contraseniaCliente;
 	}
-	public void setContraseñaCliente(String contraseñaCliente) {
-		this.contraseñaCliente = contraseñaCliente;
+	public void setContraseniaCliente(String contraseniaCliente) {
+		this.contraseniaCliente = contraseniaCliente;
 	}
 	public boolean isEsValidadoCliente() {
 		return esValidadoCliente;
@@ -102,5 +98,10 @@ public class Cliente {
 			   "\n%%%%%%%%%";
 	}
 	
-	
+	public String toString1() {
+		return "DNI: " + dniCliente + 
+			   "\nNOMBRE: " + nombreCompletoCliente + 
+			   "\nESTADO VALIDACION: " + (esValidadoCliente ? "Si" : "No")+
+			   "\n%%%%%%%%%\n"+"Id cliente:"+idCliente;
+	}
 }
