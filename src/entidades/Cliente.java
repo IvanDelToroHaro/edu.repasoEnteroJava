@@ -1,7 +1,6 @@
 package entidades;
 
 import controladores.Inicio;
-import java.util.Collections;
 
 public class Cliente {
 
@@ -15,23 +14,26 @@ public class Cliente {
 	String emailCliente;
 	String contraseniaCliente;
 	boolean esValidadoCliente;
+	String rol;
 
-	//Constructor Lleno
 	public Cliente(String dniCliente, String nombreCompletoCliente, String nombreCliente,
-			String apellido1Cliente, String apellido2Cliente, String emailCliente, String contraseniaCliente,
-			boolean esValidadoCliente) {
-		super();
-		this.idCliente = Inicio.hashMapClientes.keySet().
-		Inicio.hashMapClientes = this.idCliente + 1;
+			String apellido1Cliente, String apellido2Cliente, String emailCliente,
+			String contraseniaCliente, boolean esValidadoCliente, String rol) {
+
+		this.idCliente = Inicio.listaUsuarios.isEmpty() ? 1
+				: Inicio.listaUsuarios.get(Inicio.listaUsuarios.size() - 1).getIdCliente() + 1;
+
 		this.dniCliente = dniCliente;
-		this.nombreCompletoCliente = apellido1Cliente+" "+apellido2Cliente+","+nombreCliente;
+		this.nombreCompletoCliente = apellido1Cliente + " " + apellido2Cliente + ", " + nombreCliente;
 		this.nombreCliente = nombreCliente;
 		this.apellido1Cliente = apellido1Cliente;
 		this.apellido2Cliente = apellido2Cliente;
 		this.emailCliente = emailCliente;
 		this.contraseniaCliente = contraseniaCliente;
 		this.esValidadoCliente = esValidadoCliente;
+		this.rol = rol;
 	}
+
 
 	//Getters & Setters
 	public long getIdCliente() {
@@ -88,6 +90,12 @@ public class Cliente {
 	public void setEsValidadoCliente(boolean esValidadoCliente) {
 		this.esValidadoCliente = esValidadoCliente;
 	}
+	public String getRol() {
+		return rol;
+	}
+	public void setRol(String rol) {
+		this.rol = rol;
+	}
 	
 	//toString
 	@Override
@@ -102,6 +110,6 @@ public class Cliente {
 		return "DNI: " + dniCliente + 
 			   "\nNOMBRE: " + nombreCompletoCliente + 
 			   "\nESTADO VALIDACION: " + (esValidadoCliente ? "Si" : "No")+
-			   "\n%%%%%%%%%\n"+"Id cliente:"+idCliente;
+			   "\n%%%%%%%%%\n"+"Id cliente:"+idCliente+"ROL: "+rol;
 	}
 }

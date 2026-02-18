@@ -9,7 +9,7 @@ public class Menu implements MenuInterfaz {
 
 	@Override
 	public byte mostrarMenuYElegirOpcion() {
-		
+
 		System.out.println("╔═════════════════════╗");
 		System.out.println("║         MENU        ║");
 		System.out.println("╠═════════════════════╣");
@@ -24,6 +24,7 @@ public class Menu implements MenuInterfaz {
 
 	public void accionarMenuPrincipal() {
 
+		subMenuEmpleado.agregarAdmin();
 		boolean esCerradoMenuPrincipal = false;
 		byte opcionMenuPrincipal;
 
@@ -35,7 +36,12 @@ public class Menu implements MenuInterfaz {
 				esCerradoMenuPrincipal = true;
 				break;
 			case 1:
-				subMenuEmpleado.accionarSubMenuEmpleado();
+				if (Inicio.sesionIniciada.getRol().equalsIgnoreCase("empleado")){
+					subMenuEmpleado.accionarSubMenuEmpleado();
+				}else {
+					System.out.println("No tiene acceso");
+					return;
+				}
 				break;
 			case 2:
 				subMenuCliente.accionarSubMenuCliente();

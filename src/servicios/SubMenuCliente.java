@@ -48,16 +48,15 @@ public class SubMenuCliente implements MenuInterfaz {
 		} while (!esCerradoSubMenu);
 
 	}
-
+	
 	public void nuevoCliente() {
 
 		String dni;
 		boolean dniValido = false;
 
 		do {
-			Inicio.sc.nextLine(); // Consumir el salto de línea pendiente
 			System.out.println("Introduzca su DNI (12345678A)");
-			dni = Inicio.sc.nextLine().toUpperCase();
+			dni = Inicio.sc.next().toUpperCase();
 
 			dniValido = validarDNI(dni);
 			if (dniValido) {
@@ -68,6 +67,7 @@ public class SubMenuCliente implements MenuInterfaz {
 		} while (!dniValido); // Bucle hasta que el DNI sea válido
 		String dniCliente = dni;
 
+		Inicio.sc.nextLine();
 		System.out.println("Introduzca su nombre completo (Nombre Apellido1 Apellido2)");
 		String nombreEntero = Inicio.sc.nextLine();
 		String[] nombreDividido = nombreEntero.split(" ");
@@ -82,10 +82,10 @@ public class SubMenuCliente implements MenuInterfaz {
 		String contraseñaCliente = Inicio.sc.nextLine();
 
 		Cliente nuevoCliente = new Cliente(dniCliente, null, nombreCliente, apellido1Cliente, apellido2Cliente,
-				emailCliente, contraseñaCliente, false);
+				emailCliente, contraseñaCliente, false, null);
 
 		// Añadir cliente nuevo
-		Inicio.hashMapClientes.put(nuevoCliente.getIdCliente(), nuevoCliente);
+		Inicio.listaUsuarios.add(nuevoCliente);
 		System.out.println(nuevoCliente.toString1());
 
 	}
@@ -116,13 +116,14 @@ public class SubMenuCliente implements MenuInterfaz {
 			System.out.println("Introduzca su contraseña");
 			String validarContrasenia = Inicio.sc.next();
 
-			for (Cliente u : Inicio.hashMapClientes.values()) {
+			for (Cliente u : Inicio.listaUsuarios) {
 				if (validarEmail.equals(u.getEmailCliente()) && validarContrasenia.equals(u.getContraseniaCliente())
 						&& u.isEsValidadoCliente() == true) {
 					System.out.println("INICIO DE SESIÓN CORRECTO");
 					System.out.println("Volviendo al Menu");
 					salirAMenu = true;
 					sesionValida = true;
+					Inicio.sesionIniciada = u;
 				}
 			}
 
@@ -136,6 +137,5 @@ public class SubMenuCliente implements MenuInterfaz {
 				System.out.println("Se acabaron los intentos");
 			}
 		} while (i < 3 && !salirAMenu);
-
 	}
 }
