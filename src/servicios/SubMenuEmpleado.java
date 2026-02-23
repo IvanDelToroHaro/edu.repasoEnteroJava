@@ -11,11 +11,11 @@ public class SubMenuEmpleado implements MenuInterfaz {
 		System.out.println("╔════════════════════╗");
 		System.out.println("║  SUBMENU EMPLEADO  ║");
 		System.out.println("╠════════════════════╣");
-		System.out.println("║ 0. Volver al menu  ║");
-		System.out.println("║ 1. Validar cliente ║");
-		System.out.println("║ 2. Borrar cliente  ║");
-		System.out.println("║ 3. Mostrar cliente ║");
-		System.out.println("║ 4. Asignar rol     ║");
+		System.out.println("║ 0. Volver al Menu  ║");
+		System.out.println("║ 1. Validar Cliente ║");
+		System.out.println("║ 2. Borrar Cliente  ║");
+		System.out.println("║ 3. Mostrar Cliente ║");
+		System.out.println("║ 4. Asignar Rol     ║");
 		System.out.println("╚════════════════════╝");
 		return Inicio.sc.nextByte();
 	}
@@ -94,7 +94,11 @@ public class SubMenuEmpleado implements MenuInterfaz {
 
 		if (!control) {
 			System.out.println("DNI mal introducido");
+			String log = "El empleado introduce mal el DNI";
+			Inicio.escribirArchivo(log);
 		}
+		String log = "El empleado valida el dni";
+		Inicio.escribirArchivo(log);
 	}
 
 	Cliente eliminarCliente;
@@ -104,33 +108,39 @@ public class SubMenuEmpleado implements MenuInterfaz {
 		salirAMenu = false;
 		boolean dniValido = false;
 
-		System.out.println("Introduzca el DNI a comprobar");
-		String dniIntro = Inicio.sc.next();
+			System.out.println("Introduzca el DNI a comprobar");
+			String dni = Inicio.sc.next();
+			dniValido = SubMenuCliente.validarDNI(dni);
+			
+			if(dniValido) {
+				Cliente clienteAEliminar = null;
 
-		Cliente clienteAEliminar = null;
+				for (Cliente u : Inicio.listaUsuarios) {
+					if (dni.equals(u.getDniCliente())) {
+						System.out.println("DNI encontrado");
+						dniValido = true;
+						clienteAEliminar = u;
+					}
+				}
 
-		for (Cliente u : Inicio.listaUsuarios) {
-			if (dniIntro.equals(u.getDniCliente())) {
-				System.out.println("DNI encontrado");
-				dniValido = true;
-				clienteAEliminar = u;
+				if (!dniValido) {
+					System.out.println("El DNI no existe en la lista");
+					return;
+				}
+
+				System.out.println("¿Está seguro de que quiere eliminar este cliente? ('Si' o 'No')");
+				String confirmacion = Inicio.sc.next();
+
+				if (confirmacion.equalsIgnoreCase("Si")) {
+					Inicio.listaUsuarios.remove(clienteAEliminar);
+					System.out.println("Cliente eliminado correctamente");
+				} else {
+					System.out.println("Volviendo al Menu");
+				}
+			}else {
+				System.out.println("El DNI no es valido, volviendo al menu");
 			}
-		}
-
-		if (!dniValido) {
-			System.out.println("El DNI no existe en la lista");
-			return;
-		}
-
-		System.out.println("¿Está seguro de que quiere eliminar este cliente? ('Si' o 'No')");
-		String confirmacion = Inicio.sc.next();
-
-		if (confirmacion.equalsIgnoreCase("Si")) {
-			Inicio.listaUsuarios.remove(clienteAEliminar);
-			System.out.println("Cliente eliminado correctamente");
-		} else {
-			System.out.println("Volviendo al Menu");
-		}
+		
 	}
 
 	public void mostrarClientes() {

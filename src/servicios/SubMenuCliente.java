@@ -11,14 +11,14 @@ public class SubMenuCliente implements MenuInterfaz {
 		System.out.println("╔═════════════════════╗");
 		System.out.println("║   SUBMENU CLIENTE   ║");
 		System.out.println("╠═════════════════════╣");
-		System.out.println("║ 0. Volver al menu   ║");
-		System.out.println("║ 1. Registro cliente ║");
-		System.out.println("║ 2. Acceso cliente   ║");
+		System.out.println("║ 0. Volver al Menu   ║");
+		System.out.println("║ 1. Registro Cliente ║");
+		System.out.println("║ 2. Acceso Cliente   ║");
 		System.out.println("╚═════════════════════╝");
 		return Inicio.sc.nextByte();
 	}
 
-	boolean salirAMenu = false;
+	static boolean salirAMenu = false;
 
 	public void accionarSubMenuCliente() {
 
@@ -87,6 +87,8 @@ public class SubMenuCliente implements MenuInterfaz {
 		// Añadir cliente nuevo
 		Inicio.listaUsuarios.add(nuevoCliente);
 		System.out.println(nuevoCliente.toString1());
+		String log = "El cliente se da de alta";
+		Inicio.escribirArchivo(log);
 
 	}
 
@@ -105,7 +107,7 @@ public class SubMenuCliente implements MenuInterfaz {
 		return letra == letraCorrecta;
 	}
 
-	public void accederCliente() {
+	static public void accederCliente() {
 		int i = 0;
 		salirAMenu = false;
 		boolean sesionValida = false;
@@ -137,5 +139,7 @@ public class SubMenuCliente implements MenuInterfaz {
 				System.out.println("Se acabaron los intentos");
 			}
 		} while (i < 3 && !salirAMenu);
+		String log = "El cliente accede a la app";
+		Inicio.escribirArchivo(log);
 	}
 }

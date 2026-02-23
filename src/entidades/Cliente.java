@@ -33,7 +33,10 @@ public class Cliente {
 		this.esValidadoCliente = esValidadoCliente;
 		this.rol = rol;
 	}
-
+	
+	public Cliente() {
+		super();
+	}
 
 	//Getters & Setters
 	public long getIdCliente() {
