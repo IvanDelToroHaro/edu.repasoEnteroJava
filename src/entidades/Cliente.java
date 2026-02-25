@@ -113,6 +113,6 @@ public class Cliente {
 		return "DNI: " + dniCliente + 
 			   "\nNOMBRE: " + nombreCompletoCliente + 
 			   "\nESTADO VALIDACION: " + (esValidadoCliente ? "Si" : "No")+
-			   "\n%%%%%%%%%\n"+"Id cliente:"+idCliente+"ROL: "+rol;
+			   "\n%%%%%%%%%\n"+"Id cliente: "+idCliente+" ROL: "+rol;
 	}
 }

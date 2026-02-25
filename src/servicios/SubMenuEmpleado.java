@@ -65,11 +65,13 @@ public class SubMenuEmpleado implements MenuInterfaz {
 		String emailCliente = "admin";
 		String contraseniaCliente = "1234";
 		boolean esValidadoCliente = true;
-		String rol = "Empleado";
+		String rol = "empleado";
 		Cliente admin = new Cliente(dniCliente, nombreCompletoCliente, nombreCliente, apellido1Cliente,
 				apellido2Cliente, emailCliente, contraseniaCliente, esValidadoCliente, rol);
 		Inicio.listaUsuarios.add(admin);
 		//Inicio.sesionIniciada = admin;
+		String log = "El empleado admin automatico se da de alta";
+		Inicio.escribirConsoleLogGeneral(log);
 	}
 
 	public void validarCliente() {
@@ -95,10 +97,10 @@ public class SubMenuEmpleado implements MenuInterfaz {
 		if (!control) {
 			System.out.println("DNI mal introducido");
 			String log = "El empleado introduce mal el DNI";
-			Inicio.escribirArchivo(log);
+			Inicio.escribirConsoleLogGeneral(log);
 		}
 		String log = "El empleado valida el dni";
-		Inicio.escribirArchivo(log);
+		Inicio.escribirConsoleLogGeneral(log);
 	}
 
 	Cliente eliminarCliente;
@@ -140,7 +142,8 @@ public class SubMenuEmpleado implements MenuInterfaz {
 			}else {
 				System.out.println("El DNI no es valido, volviendo al menu");
 			}
-		
+			String log = "El empleado admin da de baja un cliente";
+			Inicio.escribirConsoleLogGeneral(log);
 	}
 
 	public void mostrarClientes() {
@@ -149,6 +152,8 @@ public class SubMenuEmpleado implements MenuInterfaz {
 				System.out.println(u.toString());
 			}
 		}
+		String log = "El empleado admin muestra los clientes validados";
+		Inicio.escribirConsoleLogGeneral(log);
 	}
 
 	public void asignarRol() {
@@ -195,6 +200,7 @@ public class SubMenuEmpleado implements MenuInterfaz {
 			System.out.println("Rol no existente");
 			return;
 		}
+		String log = "El empleado admin asigna el rol "+rolDado.toLowerCase();
+		Inicio.escribirConsoleLogGeneral(log);
 	}
-
 }

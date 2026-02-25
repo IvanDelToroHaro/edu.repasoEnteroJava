@@ -77,24 +77,28 @@ public class SubMenuCliente implements MenuInterfaz {
 
 		System.out.println("Introduzca su email");
 		String emailCliente = Inicio.sc.nextLine();
-
+		
 		System.out.println("Introduzca su contraseña");
 		String contraseñaCliente = Inicio.sc.nextLine();
+		
+		String rolCliente = "cliente";
 
 		Cliente nuevoCliente = new Cliente(dniCliente, null, nombreCliente, apellido1Cliente, apellido2Cliente,
-				emailCliente, contraseñaCliente, false, null);
+				emailCliente, contraseñaCliente, false, rolCliente);
 
 		// Añadir cliente nuevo
 		Inicio.listaUsuarios.add(nuevoCliente);
 		System.out.println(nuevoCliente.toString1());
 		String log = "El cliente se da de alta";
-		Inicio.escribirArchivo(log);
+		Inicio.escribirConsoleLogGeneral(log);
 
 	}
 
 	// Parte de nuevoCliente
 	public static boolean validarDNI(String dni) {
 		if (dni.length() != 9) {
+			String log = "Se valida el DNI // DNI INVALIDO";
+			Inicio.escribirConsoleLogGeneral(log);
 			return false;
 		}
 
@@ -103,6 +107,9 @@ public class SubMenuCliente implements MenuInterfaz {
 
 		int resto = numero % 23;
 		char letraCorrecta = Inicio.LETRAS.charAt(resto);
+		
+		String log = "Se valida el DNI// DNI VALIDO";
+		Inicio.escribirConsoleLogGeneral(log);
 
 		return letra == letraCorrecta;
 	}
@@ -123,15 +130,20 @@ public class SubMenuCliente implements MenuInterfaz {
 						&& u.isEsValidadoCliente() == true) {
 					System.out.println("INICIO DE SESIÓN CORRECTO");
 					System.out.println("Volviendo al Menu");
+					String log = "El cliente accede a la app";
+					Inicio.escribirConsoleLogGeneral(log);
 					salirAMenu = true;
 					sesionValida = true;
 					Inicio.sesionIniciada = u;
 				}
+				System.out.println(Inicio.sesionIniciada.toString1());
 			}
 
 			if (sesionValida == false) {
 				System.out.println("Error en los campos introducidos");
 				System.out.println("Volviendo al Menu");
+				String log = "El cliente no inicia bien sesion y se le devuelve al menu";
+				Inicio.escribirConsoleLogGeneral(log);
 				salirAMenu = true;
 			}
 			i++;
@@ -139,7 +151,9 @@ public class SubMenuCliente implements MenuInterfaz {
 				System.out.println("Se acabaron los intentos");
 			}
 		} while (i < 3 && !salirAMenu);
-		String log = "El cliente accede a la app";
-		Inicio.escribirArchivo(log);
+		if(Inicio.sesionIniciada.getRol().equals("cliente")) {
+			String log = "El cliente "+Inicio.sesionIniciada.getDniCliente()+" accede a la app";
+			Inicio.escribirConsoleLogCliente(log, Inicio.sesionIniciada.getDniCliente()+".log");
+		}
 	}
 }
